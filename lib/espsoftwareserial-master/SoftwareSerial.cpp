@@ -269,6 +269,7 @@ int SoftwareSerial::peek() {
 }
 
 void IRAM_ATTR SoftwareSerial::rxRead() {
+  // Serial.println ("rxRead()");
    // Advance the starting point for the samples but compensate for the
    // initial delay which occurs before the interrupt is delivered
    unsigned long wait = m_bitTime + m_bitTime/3 - 500;
@@ -293,6 +294,5 @@ void IRAM_ATTR SoftwareSerial::rxRead() {
    }
    // Must clear this bit in the interrupt register,
    // it gets set even when interrupts are disabled
-      GPIO.status_w1tc = 0;
-        return;
+   GPIO.status_w1tc = 1 << m_rxPin;   
 }
